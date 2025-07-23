@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Professional Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary-color: #4F46E5;
+            --secondary-color: #10B981;
+            --dark-color: #1F2937;
+            --light-color: #F9FAFB;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        nav.scrolled {
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.9) 0%, rgba(67, 56, 202, 0.9) 100%);
+            color: white;
+        }
+        
+        .hero-content {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease forwards;
+        }
+        
+        /* About Section */
+        .about-img {
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            transform: rotate(-5deg);
+            transition: all 0.5s ease;
+        }
+        
+        .about-img:hover {
+            transform: rotate(0deg) scale(1.05);
+        }
+        
+        /* Skills Section */
+        .skill-card {
+            transition: all 0.3s ease;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Projects Section */
+        .project-card {
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 40px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .project-image {
+            transition: all 0.5s ease;
+        }
+        
+        .project-card:hover .project-image {
+            transform: scale(1.1);
+        }
+        
+        /* Contact Section */
+        .contact-form {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+        
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        /* Add delay for staggered animations */
+        .delay-1 {
+            animation-delay: 0.2s;
+        }
+        
+        .delay-2 {
+            animation-delay: 0.4s;
+        }
+        
+        .delay-3 {
+            animation-delay: 0.6s;
+        }
+        
+        .delay-4 {
+            animation-delay: 0.8s;
+        }
+        
+        /* Section titles */
+        .section-title {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 4px;
+            background: var(--primary-color);
+            bottom: -10px;
+            left: 0;
+            border-radius: 2px;
+        }
+        
+        /* Timeline */
+        .timeline-item {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 2rem;
+        }
+        
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            width: 1px;
+            height: 100%;
+            background: #E5E7EB;
+            left: 0.5rem;
+            top: 0;
+        }
+        
+        .timeline-item:last-child:before {
+            height: 70%;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            background: var(--primary-color);
+            left: 0;
+            top: 0.25rem;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .about-img {
+                margin-bottom: 2rem;
+            }
+            
+            .hero-content {
+                text-align: center;
+            }
+            
+            .section-title {
+                text-align: center;
+            }
+            
+            .section-title:after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="py-4 px-6 lg:px-12">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-indigo-600">Gaurav Kumar Sharma </a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#home" class="text-gray-700 hover:text-indigo-600 transition">Home</a>
+                <a href="#about" class="text-gray-700 hover:text-indigo-600 transition">About</a>
+                <a href="#skills" class="text-gray-700 hover:text-indigo-600 transition">Skills</a>
+                <a href="#projects" class="text-gray-700 hover:text-indigo-600 transition">Projects</a>
+                <a href="#education" class="text-gray-700 hover:text-indigo-600 transition">Education</a>
+                <a href="#contact" class="text-gray-700 hover:text-indigo-600 transition">Contact</a>
+            </div>
+            <button class="md:hidden focus:outline-none" id="menu-toggle">
+                <i class="fas fa-bars text-gray-700 text-2xl"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden py-4" id="mobile-menu">
+            <div class="flex flex-col space-y-4 px-6">
+                <a href="#home" class="text-gray-700 hover:text-indigo-600 transition">Home</a>
+                <a href="#about" class="text-gray-700 hover:text-indigo-600 transition">About</a>
+                <a href="#skills" class="text-gray-700 hover:text-indigo-600 transition">Skills</a>
+                <a href="#projects" class="text-gray-700 hover:text-indigo-600 transition">Projects</a>
+                <a href="#education" class="text-gray-700 hover:text-indigo-600 transition">Education</a>
+                <a href="#contact" class="text-gray-700 hover:text-indigo-600 transition">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero min-h-screen flex items-center justify-center pt-16">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="flex flex-col lg:flex-row items-center justify-between">
+                <div class="hero-content lg:w-1/2 mb-12 lg:mb-0">
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+                        Hi, I'm <span class="text-indigo-300">Gaurav Kumar Sharma</span>
+                    </h1>
+                    <h2 class="text-2xl md:text-3xl text-indigo-200 mb-6">Data Analyst & Business Analyst </h2>
+                    <p class="text-indigo-100 mb-8 text-lg max-w-lg">
+                        "A skilled professional who leverages data analytics to uncover business insights, optimize processes, and support strategic decision-making by combining technical analysis with a strong understanding of business objectives."
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#contact" class="bg-white text-indigo-600 px-6 py-3 rounded-full font-medium shadow-lg hover:shadow-xl transition transform hover:-translate-y-1">
+                            Contact Me
+                        </a>
+                        <a href="#projects" class="border-2 border-white text-white px-6 py-3 rounded-full font-medium hover:bg-white hover:text-indigo-600 transition">
+                            View Projects
+                        </a>
+                    </div>
+                </div>
+               <div class="lg:w-1/2 flex justify-center">
+        <img src="Photos_me.png" alt="Gaurav Profile" class="rounded-full w-64 h-64 md:w-80 md:h-80 object-cover border-4 border-white shadow-xl floating">
+      </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="text-center mb-16">
+                <h2 class="section-title text-3xl md:text-4xl font-bold text-gray-800">About Me</h2>
+                <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Get to know more about me</p>
+            </div>
+            
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 mb-12 lg:mb-0 lg:pr-12">
+                    <img src="photo3.jpg " alt="Casual portrait of developer smiling in modern office environment" class="about-img w-full max-w-md mx-auto">
+                </div>
+                <div class="lg:w-1/2">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">I'm Gaurav Kumar Sharma</h3>
+                    <p class="text-gray-600 mb-6">
+                        A passionate Data Analyst with multiple internships experience in creating usfull insights that solve real-world problems. I specialize in Power bi and 4 star in Microsoft SQL across the whole Comain (Python Libraries , power bi , SqL , SQL , Artificial integration).
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+                        <div>
+                            <p class="text-gray-800 font-medium"><span class="text-indigo-600">Name:</span> Gaurav Kumar Sharma</p>
+                            <p class="text-gray-800 font-medium"><span class="text-indigo-600">Email:</span> Gaurav14042005@gmail.com</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-800 font-medium"><span class="text-indigo-600">Degree:</span> <B class="Tech"></B></p>
+                            <p class="text-gray-800 font-medium"><span class="text-indigo-600">City:</span> Jodhpur</p>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="flex space-x-4">
+                        <a href="Data Analyst Gaurav Kumar Sharma.pdf" class="bg-indigo-600 text-white px-6 py-3 rounded-full font-medium hover:bg-indigo-700 transition">
+                            Download CV
+                        </a>
+                        <a href="#contact" class="border-2 border-indigo-600 text-indigo-600 px-6 py-3 rounded-full font-medium hover:bg-indigo-600 hover:text-white transition">
+                            Hire Me
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="text-center mb-16">
+                <h2 class="section-title text-3xl md:text-4xl font-bold text-gray-800">My Skills</h2>
+                <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Technologies I work with</p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Frontend Skills -->
+                <div class="skill-card rounded-xl p-8 hover:shadow-lg transition">
+                    <div class="text-center mb-6">
+                        <div class="bg-indigo-100 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4">
+                            <i class="fas fa-desktop text-indigo-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Data Analyst</h3>
+                    </div>
+                    <ul class="space-y-3">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            <span class="text-gray-600">Python , Libraries </span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            <span class="text-gray-600">Microsoft SQL </span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            <span class="text-gray-600">Power Bi</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            <span class="text-gray-600">EXCEL</span>
+                        </li>
+                        
+                    </ul>
+                </div>
+                
+                <!-- Backend Skills -->
+                <div class="skill-card rounded-xl p-8 hover:shadow-lg transition">
+                    <div class="text-center mb-6">
+                        <div class="bg-indigo-100 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4">
+                            <i class="fas fa-server text-indigo-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Frontend Development</h3>
+                    </div>
+                    <ul class="space-y-3">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            <span class="text-gray-600">HTML</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            <span class="text-gray-600">CSS</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            <span class="text-gray-600">JS</span>
+                        </li>
+                        
+                    </ul>
+                </div>
+                
+                <!-- Database & DevOps -->
+                <div class="skill-card rounded-xl p-8 hover:shadow-lg transition">
+                    <div class="text-center mb-6">
+                        <div class="bg-indigo-100 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4">
+                            <i class="fas fa-database text-indigo-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Database</h3>
+                    </div>
+                    <ul class="space-y-3">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            <span class="text-gray-600">Microsoft SQL , MY SQL </span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            <span class="text-gray-600">Git, GitHub Actions</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            <span class="text-gray-600">Performance Optimization</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-white">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="text-center mb-16">
+                <h2 class="section-title text-3xl md:text-4xl font-bold text-gray-800">My Projects</h2>
+                <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Some of my recent work</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="project-card bg-white rounded-xl overflow-hidden shadow-lg transition">
+                    <div class="overflow-hidden">
+                        <img src="Car.png" alt="Car dashboard showing analytics graphs and car listings" class="project-image w-full h-48 object-cover transition">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Car Dashboard</h3>
+                        <p class="text-gray-600 mb-4">
+                            A full-featured car dashboard functionality is showing the all details of car company ,Sales, and all in the single dashboard.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Excel</span>
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Power Bi</span>
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Data transfromation and modeling</span>
+                        </div>
+                        <div class="flex space-x-3">
+                            <a href="https://github.com/G-sharam/Car-Dash" class="text-indigo-600 hover:text-indigo-800">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="project-card bg-white rounded-xl overflow-hidden shadow-lg transition">
+                    <div class="overflow-hidden">
+                        <img src="bOMB DETECTION SIMULATOR.png" alt="Task management app interface with drag-and-drop functionality" class="project-image w-full h-48 object-cover transition">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Bomb Detectction Simulator                        </h3>
+                        <p class="text-gray-600 mb-4">
+                            Bomb detection simulator project in the simulation based in detect the bomb with the help of logitude and latitude direction 
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Java Libraries</span>
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Java GUI</span>
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Java Database Conectivity</span>
+                        </div>
+                        <div class="flex space-x-3">
+                            <a href="#" class="text-indigo-600 hover:text-indigo-800">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="#" class="text-indigo-600 hover:text-indigo-800">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="project-card bg-white rounded-xl overflow-hidden shadow-lg transition">
+                    <div class="overflow-hidden">
+                        <img src="SIP.png" alt="Machine learning model visualization showing accuracy metrics" class="project-image w-full h-48 object-cover transition">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2"> Systematic Investment Plan </h3>
+                        <p class="text-gray-600 mb-4">
+                            SIP project is a work like find you own details easylly like where you investment and total transction and find your analysis
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">SqL</span>
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Excel</span>
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Powerbi</span>
+                             <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Data transforming and modeling</span>
+                        </div>
+                        <div class="flex space-x-3">
+                            <a href="https://github.com/G-sharam/Bomb-Detection-simmulator" class="text-indigo-600 hover:text-indigo-800">
+                                <i class="fab fa-github"></i>
+                            </a>
+                      
+                        </div>
+                    </div>
+                </div>
+            </div>
+ <br>
+            <!-- Project 4 -->
+                <div class="project-card bg-white rounded-xl overflow-hidden shadow-lg transition">
+                    <div class="overflow-hidden">
+                        <img src="RM2.png" alt="Task management app interface with drag-and-drop functionality" class="project-image w-full h-48 object-cover transition">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">RM investment mutual fund project                       </h3>
+                        <p class="text-gray-600 mb-4">
+                           RM investment Project is the use for a your own and overall investment and transactions 
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Java Li</span>
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Java GUI</span>
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Java Database Conectivity</span>
+                        </div>
+                        <div class="flex space-x-3">
+                            <a href="https://github.com/G-sharam/RM-investment-" class="text-indigo-600 hover:text-indigo-800">
+                                <i class="fab fa-github"></i>
+                            </a>
+                           
+                        </div>
+                    </div>
+                </div>
+               
+            <div class="text-center mt-12">
+                <a href="#" class="inline-block bg-indigo-600 text-white px-6 py-3 rounded-full font-medium hover:bg-indigo-700 transition">
+                    View All Projects
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="text-center mb-16">
+                <h2 class="section-title text-3xl md:text-4xl font-bold text-gray-800">Education & Experience</h2>
+                <p class="text-gray-600 mt-4 max-w-2xl mx-auto">My academic journey and professional path</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Education Timeline -->
+                <div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-8 text-center lg:text-left">Education</h3>
+                    
+                    <div class="relative">
+                  
+                        
+                        <!-- Education 2 -->
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="bg-white p-6 rounded-xl shadow-sm">
+                                <h4 class="text-lg font-bold text-gray-800 mb-2">Science Mathematics(RBSC Board)</h4>
+                                <p class="text-gray-600 mb-2">Adarsh Senior Secondary School Gotan </p>
+                                <p class="text-gray-500 text-sm mb-3">2020 - 2021</p>
+                                <p class="text-gray-600">
+                                    Rajasthan board of senior secondary
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="bg-white p-6 rounded-xl shadow-sm">
+                                <h4 class="text-lg font-bold text-gray-800 mb-2">Bachelor's in Computer Engineering</h4>
+                                <p class="text-gray-600 mb-2">Jodhpur institute of engineering</p>
+                                <p class="text-gray-500 text-sm mb-3">2022 - 2026</p>
+                                <p class="text-gray-600">
+                                    Focused on Data role principles. Graduated with Honors. Minor in Mathematics.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Experience Timeline -->
+                <div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-8 text-center lg:text-left">Experience</h3>
+                    
+                    <div class="relative">
+                        <!-- Experience 1 -->
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="bg-white p-6 rounded-xl shadow-sm">
+                                <h4 class="text-lg font-bold text-gray-800 mb-2">JAVA JDBC Develoer Intern</h4>
+                                <p class="text-gray-600 mb-2">Defence lab DRDO.</p>
+                                <p class="text-gray-500 text-sm mb-3">May -2024</p>
+                                <p class="text-gray-600">
+                                     (JDBC Developer Intern) – Developed a GUI-based simulation using Java and JDBC that improved data processing speed by 30% and reduced manual data entry by 50% in internal testing scenarios. 
+
+
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- Experience 2 -->
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="bg-white p-6 rounded-xl shadow-sm">
+                                <h4 class="text-lg font-bold text-gray-800 mb-2">Data Analyst Internr</h4>
+                                <p class="text-gray-600 mb-2">Tech Anand rathi </p>
+                                <p class="text-gray-500 text-sm mb-3">April - 2025 -present </p>
+                                <p class="text-gray-600">
+                                   This company is a prodect base company As a data analyst i work with company real time project and make many financial report and work with large dataset
+
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- Experience 3 -->
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="bg-white p-6 rounded-xl shadow-sm">
+                                <h4 class="text-lg font-bold text-gray-800 mb-2">Virtual Data Analyst internship</h4>
+                                <p class="text-gray-600 mb-2">Deloitte</p>
+                                <p class="text-gray-500 text-sm mb-3">June 2025 - June 2025</p>
+                                <p class="text-gray-600">
+                                    Completed Deloitte's Virtual Internship, gaining hands-on experience in business consulting, data analysis, and real-world problem-solving.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+              <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="bg-white p-6 rounded-xl shadow-sm">
+                                <h4 class="text-lg font-bold text-gray-800 mb-2"> Artificial intelligence and machine learning intern</h4>
+                                <p class="text-gray-600 mb-2">IIT jodhpur </p>
+                                <p class="text-gray-500 text-sm mb-3">June 2025 - Aug 2025</p>
+                                <p class="text-gray-600">
+                                   Currently interning at IIT in the AIML domain, working on developing and enhancing an AI engine.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-indigo-50">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="text-center mb-16">
+                <h2 class="section-title text-3xl md:text-4xl font-bold text-gray-800">Get In Touch</h2>
+                <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Feel free to reach out for collaborations or just a friendly hello</p>
+            </div>
+            
+            <div class="flex flex-col lg:flex-row items-center lg:items-start gap-12">
+                <!-- Contact Info -->
+                <div class="lg:w-1/2">
+                    <div class="space-y-6">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">Contact Information</h3>
+                        
+                        <div class="flex items-start space-x-4">
+                            <div class="bg-indigo-100 w-12 h-12 rounded-full flex items-center justify-center">
+                                <i class="fas fa-envelope text-indigo-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-medium text-gray-800 mb-1">Email</h4>
+                                <p class="text-gray-600">Gaurav14042005@gmail.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4">
+                            <div class="bg-indigo-100 w-12 h-12 rounded-full flex items-center justify-center">
+                                <i class="fas fa-phone-alt text-indigo-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-medium text-gray-800 mb-1">Phone</h4>
+                                <p class="text-gray-600">+91 8619128781</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4">
+                            <div class="bg-indigo-100 w-12 h-12 rounded-full flex items-center justify-center">
+                                <i class="fas fa-map-marker-alt text-indigo-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-medium text-gray-800 mb-1">Location</h4>
+                                <p class="text-gray-600">Jodhpur</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex space-x-4 mt-8">
+                            <a href="https://github.com/G-sharam" class="bg-gray-800 text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-gray-700 transition">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/in/gaurav-sharma-998ab9318/" class="bg-blue-500 text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-blue-600 transition">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                      
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contact Form -->
+                <div class="lg:w-1/2 w-full">
+                    <form id="contactForm" class="contact-form p-8">
+                        <div class="mb-6">
+                            <label for="name" class="block text-gray-700 font-medium mb-2">Your Name</label>
+                            <input type="text" id="name" name="name" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-indigo-500 focus:outline-none transition" required>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="email" class="block text-gray-700 font-medium mb-2">Your Email</label>
+                            <input type="email" id="email" name="email" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-indigo-500 focus:outline-none transition" required>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="subject" class="block text-gray-700 font-medium mb-2">Subject</label>
+                            <input type="text" id="subject" name="subject" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-indigo-500 focus:outline-none transition" required>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="message" class="block text-gray-700 font-medium mb-2">Your Message</label>
+                            <textarea id="message" name="message" rows="5" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-indigo-500 focus:outline-none transition" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition flex items-center justify-center">
+                            <span id="submitText">Send Message</span>
+                            <svg id="submitSpinner" class="animate-spin ml-2 h-5 w-5 text-white hidden" xmlns="gaurav14042005@gmail.com" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0
